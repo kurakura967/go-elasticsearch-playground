@@ -80,5 +80,47 @@ func BenchmarkInsert(b *testing.B) {
 				}
 			}
 		})
+
+		// SingleInsertWithRefresh のベンチマーク
+		b.Run(fmt.Sprintf("SingleInsertWithRefresh/%d_docs", count), func(b *testing.B) {
+			docs := generateDocs(count)
+			indexName := fmt.Sprintf("test-single-refresh-%d", count)
+
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				b.StopTimer()
+				err := client.CreateIndex(context.Background(), indexName)
+				if err != nil {
+					b.Fatalf("failed to create index: %v", err)
+				}
+				b.StartTimer()
+
+				err = client.SingleInsertWithRefresh(context.Background(), indexName, docs)
+				if err != nil {
+					b.Fatalf("SingleInsertWithRefresh failed: %v", err)
+				}
+			}
+		})
+
+		// BulkInsertWithRefresh のベンチマーク
+		b.Run(fmt.Sprintf("BulkInsertWithRefresh/%d_docs", count), func(b *testing.B) {
+			docs := generateDocs(count)
+			indexName := fmt.Sprintf("test-bulk-refresh-%d", count)
+
+			b.ResetTimer()
+			for i := 0; i < b.N; i++ {
+				b.StopTimer()
+				err := client.CreateIndex(context.Background(), indexName)
+				if err != nil {
+					b.Fatalf("failed to create index: %v", err)
+				}
+				b.StartTimer()
+
+				err = client.BulkInsertWithRefresh(context.Background(), indexName, docs)
+				if err != nil {
+					b.Fatalf("BulkInsertWithRefresh failed: %v", err)
+				}
+			}
+		})
 	}
 }

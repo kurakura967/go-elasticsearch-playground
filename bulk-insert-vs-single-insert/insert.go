@@ -8,6 +8,7 @@ import (
 
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/elastic/go-elasticsearch/v8/esutil"
+	"github.com/elastic/go-elasticsearch/v8/typedapi/types/enums/refresh"
 )
 
 type Client struct {
@@ -86,6 +87,55 @@ func (c *Client) BulkInsert(ctx context.Context, index string, docs []map[string
 	bulkCfg := esutil.BulkIndexerConfig{
 		Client: c.baseClient,
 		Index:  index,
+	}
+
+	indexer, err := esutil.NewBulkIndexer(bulkCfg)
+	if err != nil {
+		return fmt.Errorf("failed to create bulk indexer: %w", err)
+	}
+	for i, doc := range docs {
+		data, err := json.Marshal(doc)
+		if err != nil {
+			return fmt.Errorf("failed to marshal document %d: %w", i+1, err)
+		}
+		err = indexer.Add(
+			ctx,
+			esutil.BulkIndexerItem{
+				Index:      index,
+				Action:     "index",
+				DocumentID: fmt.Sprintf("%d", i+1),
+				Body:       strings.NewReader(string(data)),
+			},
+		)
+		if err != nil {
+			return fmt.Errorf("failed to add document %d to bulk indexer: %w", i+1, err)
+		}
+	}
+	if err := indexer.Close(ctx); err != nil {
+		return fmt.Errorf("failed to close bulk indexer: %w", err)
+	}
+	return nil
+}
+
+func (c *Client) SingleInsertWithRefresh(ctx context.Context, index string, docs []map[string]interface{}) error {
+	for i, doc := range docs {
+		_, err := c.typedClient.Index(index).
+			Id(fmt.Sprintf("%d", i+1)).
+			Request(doc).
+			Refresh(refresh.True).
+			Do(ctx)
+		if err != nil {
+			return fmt.Errorf("failed to insert document %d: %w", i+1, err)
+		}
+	}
+	return nil
+}
+
+func (c *Client) BulkInsertWithRefresh(ctx context.Context, index string, docs []map[string]interface{}) error {
+	bulkCfg := esutil.BulkIndexerConfig{
+		Client:  c.baseClient,
+		Index:   index,
+		Refresh: "true",
 	}
 
 	indexer, err := esutil.NewBulkIndexer(bulkCfg)
