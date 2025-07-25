@@ -1,0 +1,96 @@
+[project]
+name = "hello-ltr"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "kurakura967",email = "hiroki.kurasawa@zozo.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "alembic (>=1.16.4,<2.0.0)",
+    "appnope (>=0.1.4,<0.2.0)",
+    "attrs (>=25.3.0,<26.0.0)",
+    "backcall (>=0.2.0,<0.3.0)",
+    "bleach (>=6.2.0,<7.0.0)",
+    "certifi (>=2025.7.14,<2026.0.0)",
+    "chardet (>=5.2.0,<6.0.0)",
+    "cycler (>=0.12.1,<0.13.0)",
+    "cython (>=3.1.2,<4.0.0)",
+    "decorator (>=5.2.1,<6.0.0)",
+    "defusedxml (>=0.7.1,<0.8.0)",
+    "elasticsearch (>=8.8.2,<9.0.0)",
+    "entrypoints (>=0.4,<0.5)",
+    "fuzzywuzzy (>=0.18.0,<0.19.0)",
+    "graphviz (>=0.21,<0.22)",
+    "idna (>=3.10,<4.0)",
+    "ipykernel (>=6.29.5,<7.0.0)",
+    "ipython (>=9.4.0,<10.0.0)",
+    "ipython-genutils (>=0.2.0,<0.3.0)",
+    "ipywidgets (>=8.1.7,<9.0.0)",
+    "jedi (>=0.19.2,<0.20.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "joblib (>=1.5.1,<2.0.0)",
+    "jsonschema (>=4.24.1,<5.0.0)",
+    "jupyter (>=1.1.1,<2.0.0)",
+    "jupyter-client (>=8.6.3,<9.0.0)",
+    "jupyter-console (>=6.6.3,<7.0.0)",
+    "jupyter-core (>=5.8.1,<6.0.0)",
+    "kiwisolver (>=1.4.8,<2.0.0)",
+    "mako (>=1.3.10,<2.0.0)",
+    "markupsafe (>=3.0.2,<4.0.0)",
+    "matplotlib (>=3.10.3,<4.0.0)",
+    "mistune (>=3.1.3,<4.0.0)",
+    "mizani (>=0.14.2,<0.15.0)",
+    "nbconvert (>=7.16.6,<8.0.0)",
+    "nbformat (>=5.10.4,<6.0.0)",
+    "nbgrader (>=0.9.5,<0.10.0)",
+    "nbstripout (>=0.8.1,<0.9.0)",
+    "notebook (>=7.4.4,<8.0.0)",
+    "numpy (>=2.3.1,<3.0.0)",
+    "opensearch-py (>=3.0.0,<4.0.0)",
+    "pandas (>=2.3.1,<3.0.0)",
+    "pandocfilters (>=1.5.1,<2.0.0)",
+    "parso (>=0.8.4,<0.9.0)",
+    "pexpect (>=4.9.0,<5.0.0)",
+    "pickleshare (>=0.7.5,<0.8.0)",
+    "plotly (>=6.2.0,<7.0.0)",
+    "plotnine (>=0.15.0,<0.16.0)",
+    "prometheus-client (>=0.22.1,<0.23.0)",
+    "prompt-toolkit (>=3.0.51,<4.0.0)",
+    "ptyprocess (>=0.7.0,<0.8.0)",
+    "pygments (>=2.19.2,<3.0.0)",
+    "pyparsing (>=3.2.3,<4.0.0)",
+    "pyrsistent (>=0.20.0,<0.21.0)",
+    "python-dateutil (>=2.9.0.post0,<3.0.0)",
+    "python-editor (>=1.0.4,<2.0.0)",
+    "pytz (>=2025.2,<2026.0)",
+    "pyzmq (>=27.0.0,<28.0.0)",
+    "qtconsole (>=5.6.1,<6.0.0)",
+    "requests (>=2.32.4,<3.0.0)",
+    "retrying (>=1.4.0,<2.0.0)",
+    "scikit-learn (>=1.7.0,<2.0.0)",
+    "scipy (>=1.16.0,<2.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+    "send2trash (>=1.8.3,<2.0.0)",
+    "six (>=1.17.0,<2.0.0)",
+    "sqlalchemy (>=2.0.41,<3.0.0)",
+    "terminado (>=0.18.1,<0.19.0)",
+    "testpath (>=0.6.0,<0.7.0)",
+    "threadpoolctl (>=3.6.0,<4.0.0)",
+    "tornado (>=6.5.1,<7.0.0)",
+    "tqdm (>=4.67.1,<5.0.0)",
+    "traitlets (>=5.14.3,<6.0.0)",
+    "urllib3 (>=2.5.0,<3.0.0)",
+    "wcwidth (>=0.2.13,<0.3.0)",
+    "webencodings (>=0.5.1,<0.6.0)",
+    "widgetsnbextension (>=4.0.14,<5.0.0)",
+    "xgboost (>=3.0.2,<4.0.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,73 @@
+services:
+  notebooks:
+    build: .
+    container_name: hello-ltr-notebook
+    ports:
+      - 8888:8888
+    environment:
+      - LTR_DOCKER=yes
+    links:
+      - elastic
+      - solr
+
+  elastic:
+    build:
+      context: ./notebooks/elasticsearch/.docker/es-docker/
+      dockerfile: Dockerfile
+    container_name: hello-ltr-elastic
+    environment:
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+    ports:
+      - 9200:9200
+
+  kibana:
+    build:
+      context: ./notebooks/elasticsearch/.docker/kb-docker/
+      dockerfile: Dockerfile
+    container_name: hello-ltr-kibana
+    expose:
+      - "5601"
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: "http://hello-ltr-elastic:9200"
+      ELASTICSEARCH_URL: "http://hello-ltr-elastic:9200"
+      SERVER_HOST: "0.0.0.0"
+
+  opensearch-node1:
+    build:
+      context: ./notebooks/opensearch/.docker/opensearch-docker/
+      dockerfile: Dockerfile
+    container_name: hello-ltr-opensearch
+    ports:
+      - "9201:9201"
+    environment:
+      - "SERVER_HOST=0.0.0.0"
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "DISABLE_INSTALL_DEMO_CONFIG=true"
+      - "DISABLE_SECURITY_PLUGIN=true"
+      - "discovery.type=single-node"
+
+  osd-dashboards:
+    build:
+      context: ./notebooks/opensearch/.docker/osd-docker/
+      dockerfile: Dockerfile
+    container_name: hello-ltr-osd
+    expose:
+      - "5602"
+    ports:
+      - "5602:5602"
+    environment:
+      OPENSEARCH_HOSTS: "http://hello-ltr-opensearch:9201"
+      OPENSEARCH_URL: "http://hello-ltr-opensearch:9201"
+      SERVER_HOST: "0.0.0.0"
+      DISABLE_SECURITY_DASHBOARDS_PLUGIN: true
+
+  solr:
+    build:
+      context: ./notebooks/solr/
+      dockerfile: Dockerfile
+    container_name: hello-ltr-solr
+    ports:
+      - 8983:8983
